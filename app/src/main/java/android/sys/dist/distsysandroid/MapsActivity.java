@@ -4,30 +4,36 @@ import android.graphics.Color;
 import android.os.AsyncTask;
 import android.support.v4.app.FragmentActivity;
 import android.os.Bundle;
+import android.view.View;
+import android.widget.EditText;
+import android.widget.LinearLayout;
+import android.widget.TextView;
 
-import com.google.android.gms.maps.CameraUpdateFactory;
 import com.google.android.gms.maps.GoogleMap;
 import com.google.android.gms.maps.OnMapReadyCallback;
 import com.google.android.gms.maps.SupportMapFragment;
 import com.google.android.gms.maps.model.LatLng;
 import com.google.android.gms.maps.model.MarkerOptions;
-import com.google.android.gms.maps.model.Polyline;
 import com.google.android.gms.maps.model.PolylineOptions;
 import com.google.maps.model.DirectionsLeg;
 import com.google.maps.model.DirectionsResult;
 import com.google.maps.model.DirectionsRoute;
 import com.google.maps.model.DirectionsStep;
-
 import java.io.IOException;
 import java.io.ObjectInputStream;
 import java.io.ObjectOutputStream;
 import java.net.Socket;
+import java.text.DecimalFormat;
+import java.text.NumberFormat;
 import java.util.ArrayList;
-import java.util.Arrays;
 
-public class MapsActivity extends FragmentActivity implements OnMapReadyCallback {
+public class MapsActivity extends FragmentActivity
+        implements OnMapReadyCallback,
+        GoogleMap.OnMapLongClickListener {
 
     private GoogleMap mMap;
+    private EditText editText, editText2;
+    private LinearLayout linearLayout, linearLayout2;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -37,6 +43,10 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
         SupportMapFragment mapFragment = (SupportMapFragment) getSupportFragmentManager()
                 .findFragmentById(R.id.map);
         mapFragment.getMapAsync(this);
+        editText = (EditText) findViewById(R.id.starting_location_latitude);
+        editText2 = (EditText) findViewById(R.id.starting_location_longitude);
+        linearLayout = (LinearLayout) findViewById(R.id.linearLayout);
+        linearLayout2 = (LinearLayout) findViewById(R.id.linearLayout2);
         GetDirections getDirections = new GetDirections(this);
         getDirections.execute();
     }
@@ -54,6 +64,20 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
     @Override
     public void onMapReady(GoogleMap googleMap) {
         mMap = googleMap;
+        mMap.setOnMapLongClickListener(this);
+    }
+
+    public void confirmStartingPoint(View view) {
+        linearLayout.setVisibility(View.GONE);
+        linearLayout2.setVisibility(View.VISIBLE);
+    }
+
+    @Override
+    public void onMapLongClick(LatLng latLng) {
+        NumberFormat formatter = new DecimalFormat("#0.00");
+        editText.setText(String.valueOf(formatter.format(latLng.latitude)));
+        editText2.setText(String.valueOf(formatter.format(latLng.longitude)));
+        mMap.addMarker(new MarkerOptions().position(latLng));
     }
 
     private class GetDirections extends AsyncTask {
