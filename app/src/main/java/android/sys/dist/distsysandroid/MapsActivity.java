@@ -1,9 +1,11 @@
 package android.sys.dist.distsysandroid;
 
+import android.content.Intent;
 import android.graphics.Color;
 import android.os.AsyncTask;
 import android.support.v4.app.FragmentActivity;
 import android.os.Bundle;
+import android.support.v7.widget.LinearLayoutCompat;
 import android.view.View;
 import android.widget.EditText;
 import android.widget.LinearLayout;
@@ -33,22 +35,44 @@ public class MapsActivity extends FragmentActivity
 
     private GoogleMap mMap;
     private EditText editText, editText2;
-    private LinearLayout linearLayout, linearLayout2;
+    private LinearLayout linearLayout, linearLayout2, linearLayout3;
+    private MarkerOptions startPoint, endPoint;
+    private boolean isStartingPointConfirmed = false, isEndingointConfirmed = false;
+    private NumberFormat formatter;
+    private EditText editText3;
+    private EditText editText4;
+    private String ip, port;
+    private Socket socketToMaster;
+    private ObjectOutputStream objectOutputStreamToMaster;
+    private ObjectInputStream objectInputStreamFromMaster;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_maps);
+        final Intent intent = getIntent();
+        ip = intent.getStringExtra("ip");
+        port = intent.getStringExtra("port");
+        formatter = new DecimalFormat("#0.00");
         // Obtain the SupportMapFragment and get notified when the map is ready to be used.
         SupportMapFragment mapFragment = (SupportMapFragment) getSupportFragmentManager()
                 .findFragmentById(R.id.map);
         mapFragment.getMapAsync(this);
         editText = (EditText) findViewById(R.id.starting_location_latitude);
         editText2 = (EditText) findViewById(R.id.starting_location_longitude);
+        editText3 = (EditText) findViewById(R.id.ending_location_latitude);
+        editText4 = (EditText) findViewById(R.id.ending_location_longitude);
         linearLayout = (LinearLayout) findViewById(R.id.linearLayout);
         linearLayout2 = (LinearLayout) findViewById(R.id.linearLayout2);
-        GetDirections getDirections = new GetDirections(this);
+        linearLayout3 = (LinearLayout) findViewById(R.id.linearLayout3);
+
+    }
+
+    @Override
+    protected void onDestroy() {
+        GetDirections getDirections = new GetDirections(this, "terminate");
         getDirections.execute();
+        super.onDestroy();
     }
 
 
@@ -70,40 +94,97 @@ public class MapsActivity extends FragmentActivity
     public void confirmStartingPoint(View view) {
         linearLayout.setVisibility(View.GONE);
         linearLayout2.setVisibility(View.VISIBLE);
+        isStartingPointConfirmed = true;
+    }
+
+    public void confirmEndingPoint(View view) {
+        linearLayout2.setVisibility(View.GONE);
+        linearLayout3.setVisibility(View.VISIBLE);
+        isEndingointConfirmed = true;
+        GetDirections getDirections = new GetDirections(this, null);
+        getDirections.execute();
+    }
+
+    public void getNewDirections(View view) {
+        linearLayout3.setVisibility(View.GONE);
+        linearLayout.setVisibility(View.VISIBLE);
+        mMap.clear();
+        isStartingPointConfirmed = false;
+        isEndingointConfirmed = false;
+    }
+
+    public void returnToStartingPoint(View view) {
+        linearLayout2.setVisibility(View.GONE);
+        linearLayout.setVisibility(View.VISIBLE);
+        isEndingointConfirmed = false;
+        isStartingPointConfirmed = false;
     }
 
     @Override
     public void onMapLongClick(LatLng latLng) {
-        NumberFormat formatter = new DecimalFormat("#0.00");
-        editText.setText(String.valueOf(formatter.format(latLng.latitude)));
-        editText2.setText(String.valueOf(formatter.format(latLng.longitude)));
-        mMap.addMarker(new MarkerOptions().position(latLng));
+        if (!isStartingPointConfirmed) {
+            mMap.clear();
+            editText.setText(String.valueOf(formatter.format(latLng.latitude)));
+            editText2.setText(String.valueOf(formatter.format(latLng.longitude)));
+            startPoint = new MarkerOptions().position(latLng);
+            mMap.addMarker(startPoint);
+        } else if (!isEndingointConfirmed) {
+            mMap.clear();
+            mMap.addMarker(startPoint);
+            editText3.setText(String.valueOf(formatter.format(latLng.latitude)));
+            editText4.setText(String.valueOf(formatter.format(latLng.longitude)));
+            endPoint = new MarkerOptions().position(latLng);
+            mMap.addMarker(endPoint);
+        }
     }
 
     private class GetDirections extends AsyncTask {
 
         private FragmentActivity main;
+        private String message;
 
-        GetDirections(FragmentActivity main) {
+        GetDirections(FragmentActivity main, String message) {
             this.main = main;
+            this.message = message;
         }
 
         @Override
         protected Object doInBackground(Object[] params) {
-            try {
-                final Socket socketToMaster = new Socket("192.168.1.3", 5554);
-                ObjectOutputStream objectOutputStreamToAthens = new ObjectOutputStream(socketToMaster.getOutputStream());
-                ObjectInputStream objectInputStreamFromAthens = new ObjectInputStream(socketToMaster.getInputStream());
-                objectOutputStreamToAthens.writeObject("38.06 28.30 38.04 28.30");
-                objectOutputStreamToAthens.flush();
-                final DirectionsResult directionsResult = (DirectionsResult) objectInputStreamFromAthens.readObject();
-
-                if (mMap != null) {
-                    ArrayList<LatLng> directionPoint = getDirection(directionsResult);
-                    drawDirections(directionPoint);
+            if (message == null) {
+                try {
+                    socketToMaster = new Socket(ip, Integer.parseInt(port));
+                    objectOutputStreamToMaster = new ObjectOutputStream(socketToMaster.getOutputStream());
+                    objectInputStreamFromMaster = new ObjectInputStream(socketToMaster.getInputStream());
+                    objectOutputStreamToMaster.writeObject(startPoint.getPosition().latitude + " " +
+                            startPoint.getPosition().longitude + " " + endPoint.getPosition().latitude + " " +
+                            endPoint.getPosition().longitude);
+                    objectOutputStreamToMaster.flush();
+                    final DirectionsResult directionsResult = (DirectionsResult) objectInputStreamFromMaster.readObject();
+                    objectOutputStreamToMaster.writeObject("exit");
+                    objectOutputStreamToMaster.flush();
+                    if (mMap != null) {
+                        ArrayList<LatLng> directionPoint = getDirection(directionsResult);
+                        drawDirections(directionPoint);
+                    }
+                } catch (IOException | ClassNotFoundException e) {
+                    e.printStackTrace();
                 }
-            } catch (IOException | ClassNotFoundException e) {
-                e.printStackTrace();
+            } else if (message.equals("terminate")) {
+                try {
+                    socketToMaster = new Socket(ip, Integer.parseInt(port));
+                    objectOutputStreamToMaster = new ObjectOutputStream(socketToMaster.getOutputStream());
+                    objectInputStreamFromMaster = new ObjectInputStream(socketToMaster.getInputStream());
+                    objectOutputStreamToMaster.writeObject("terminate");
+                    objectOutputStreamToMaster.flush();
+                    if (objectOutputStreamToMaster != null)
+                        objectOutputStreamToMaster.close();
+                    if (objectInputStreamFromMaster != null)
+                        objectInputStreamFromMaster.close();
+                    if (socketToMaster != null)
+                        socketToMaster.close();
+                } catch (IOException e) {
+                    e.printStackTrace();
+                }
             }
             return null;
         }

@@ -1,4 +1,9 @@
 <resources>
     <string name="app_name">DistSysAndroid</string>
     <string name="title_activity_maps">Map</string>
+    <string name="hint_ip">IP</string>
+    <string name="hint_port">Port</string>
+    <string name="btn_connect">Connect</string>
+    <string name="err_ip">Enter a valid IP</string>
+    <string name="err_port">Enter a valid port</string>
 </resources>
