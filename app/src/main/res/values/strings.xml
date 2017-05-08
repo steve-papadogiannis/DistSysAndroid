@@ -6,4 +6,7 @@
     <string name="btn_connect">Connect</string>
     <string name="err_ip">Enter a valid IP</string>
     <string name="err_port">Enter a valid port</string>
+    <string name="config_title">Specify IP and Port</string>
+    <string name="starting_point_latitude">Starting Point Latitude</string>
+    <string name="starting_point_longitude">Starting Point Longitude</string>
 </resources>
