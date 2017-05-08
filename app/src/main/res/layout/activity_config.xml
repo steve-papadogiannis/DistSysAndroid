@@ -38,8 +38,9 @@
                 android:id="@+id/input_ip"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
+                android:hint="@string/hint_ip"
                 android:inputType="textEmailAddress"
-                android:hint="@string/hint_ip" />
+                android:text="192.168.1.2" />
         </android.support.design.widget.TextInputLayout>
 
         <android.support.design.widget.TextInputLayout
@@ -51,8 +52,9 @@
                 android:id="@+id/input_port"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:inputType="textPassword"
-                android:hint="@string/hint_port" />
+                android:hint="@string/hint_port"
+                android:inputType="text"
+                android:text="9999" />
         </android.support.design.widget.TextInputLayout>
 
         <Button android:id="@+id/btn_connect"

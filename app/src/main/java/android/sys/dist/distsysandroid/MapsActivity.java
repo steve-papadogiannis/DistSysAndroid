@@ -22,6 +22,8 @@ import java.io.IOException;
 import java.io.ObjectInputStream;
 import java.io.ObjectOutputStream;
 import java.net.Socket;
+import java.text.DecimalFormat;
+import java.text.NumberFormat;
 import java.util.ArrayList;
 
 public class MapsActivity extends FragmentActivity
@@ -34,6 +36,7 @@ public class MapsActivity extends FragmentActivity
     private MarkerOptions startPoint, endPoint;
     private boolean isStartingPointConfirmed = false,
                     isEndingointConfirmed = false;
+    private NumberFormat formatter;
     private EditText editText3;
     private EditText editText4;
     private String ip, port;
@@ -45,15 +48,16 @@ public class MapsActivity extends FragmentActivity
         final Intent intent = getIntent();
         ip = intent.getStringExtra("ip");
         port = intent.getStringExtra("port");
+        formatter = new DecimalFormat("#0.00000000");
         SupportMapFragment mapFragment = (SupportMapFragment) getSupportFragmentManager()
                 .findFragmentById(R.id.map_fragment);
         mapFragment.getMapAsync(this);
         editText = (EditText) findViewById(R.id.startingPointLatitudeEditText);
         editText2 = (EditText) findViewById(R.id.startingPointLongitudeEditText);
-//        editText3 = (EditText) findViewById(R.id.ending_location_latitude);
-//        editText4 = (EditText) findViewById(R.id.ending_location_longitude);
-        linearLayout = (LinearLayout) findViewById(R.id.mainLinearLayout);
-//        linearLayout2 = (LinearLayout) findViewById(R.id.linearLayout2);
+        editText3 = (EditText) findViewById(R.id.endingPointLatitudeEditText);
+        editText4 = (EditText) findViewById(R.id.endingPointLongitudeEditText);
+        linearLayout = (LinearLayout) findViewById(R.id.startingPointLinearLayout);
+        linearLayout2 = (LinearLayout) findViewById(R.id.endingPointLinearLayout);
 //        linearLayout3 = (LinearLayout) findViewById(R.id.linearLayout3);
 
     }
@@ -104,15 +108,15 @@ public class MapsActivity extends FragmentActivity
     public void onMapLongClick(LatLng latLng) {
         if (!isStartingPointConfirmed) {
             mMap.clear();
-            editText.setText(String.valueOf(latLng.latitude));
-            editText2.setText(String.valueOf(latLng.longitude));
+            editText.setText(String.valueOf(formatter.format(latLng.latitude)));
+            editText2.setText(String.valueOf(formatter.format(latLng.longitude)));
             startPoint = new MarkerOptions().position(latLng);
             mMap.addMarker(startPoint);
         } else if (!isEndingointConfirmed) {
             mMap.clear();
             mMap.addMarker(startPoint);
-            editText3.setText(String.valueOf(latLng.latitude));
-            editText4.setText(String.valueOf(latLng.longitude));
+            editText3.setText(String.valueOf(formatter.format(latLng.latitude)));
+            editText4.setText(String.valueOf(formatter.format(latLng.longitude)));
             endPoint = new MarkerOptions().position(latLng);
             mMap.addMarker(endPoint);
         }
