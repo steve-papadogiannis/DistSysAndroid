@@ -2,7 +2,7 @@ apply plugin: 'com.android.application'
 
 android {
     compileSdkVersion 25
-    buildToolsVersion "25.0.2"
+    buildToolsVersion "25.0.3"
     defaultConfig {
         applicationId "android.sys.dist.distsysandroid"
         minSdkVersion 16
@@ -10,9 +10,9 @@ android {
         versionCode 1
         versionName "1.0"
         testInstrumentationRunner "android.support.test.runner.AndroidJUnitRunner"
-        jackOptions {
-            enabled true
-        }
+//        jackOptions {
+//            enabled true
+//        }
     }
     buildTypes {
         release {
@@ -22,8 +22,8 @@ android {
     }
 
     compileOptions {
-        sourceCompatibility JavaVersion.VERSION_1_8
-        targetCompatibility JavaVersion.VERSION_1_8
+//        sourceCompatibility JavaVersion.VERSION_1_8
+//        targetCompatibility JavaVersion.VERSION_1_8
     }
 }
 
@@ -34,9 +34,8 @@ dependencies {
     })
     compile 'com.android.support:appcompat-v7:25.3.1'
     compile 'com.android.support:design:25.3.1'
-    compile 'com.google.android.gms:play-services-maps:10.2.1'
     testCompile 'junit:junit:4.12'
-    compile files('libs/google-maps-services-0.1.20.jar')
-    compile files('libs/joda-time-2.9.7.jar')
-    compile 'com.google.android.gms:play-services:10.2.4'
+    // https://mvnrepository.com/artifact/com.google.maps/google-maps-services
+    compile group: 'com.google.maps', name: 'google-maps-services', version: '0.1.20'
+    compile 'com.google.android.gms:play-services-maps:10.2.4'
 }

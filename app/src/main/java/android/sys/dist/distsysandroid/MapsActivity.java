@@ -1,35 +1,24 @@
 package android.sys.dist.distsysandroid;
 
 import android.content.Intent;
-import android.content.pm.PackageManager;
 import android.graphics.Color;
-import android.location.Location;
 import android.os.AsyncTask;
-import android.support.annotation.NonNull;
-import android.support.annotation.Nullable;
-import android.support.v4.app.ActivityCompat;
 import android.support.v4.app.FragmentActivity;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.EditText;
 import android.widget.LinearLayout;
-
-import com.google.android.gms.common.ConnectionResult;
-import com.google.android.gms.common.api.GoogleApiClient;
-import com.google.android.gms.location.LocationServices;
 import com.google.android.gms.maps.CameraUpdateFactory;
 import com.google.android.gms.maps.GoogleMap;
 import com.google.android.gms.maps.OnMapReadyCallback;
 import com.google.android.gms.maps.SupportMapFragment;
 import com.google.android.gms.maps.model.LatLng;
-import com.google.android.gms.maps.model.Marker;
 import com.google.android.gms.maps.model.MarkerOptions;
 import com.google.android.gms.maps.model.PolylineOptions;
 import com.google.maps.model.DirectionsLeg;
 import com.google.maps.model.DirectionsResult;
 import com.google.maps.model.DirectionsRoute;
 import com.google.maps.model.DirectionsStep;
-
 import java.io.IOException;
 import java.io.ObjectInputStream;
 import java.io.ObjectOutputStream;
@@ -40,8 +29,7 @@ import java.util.ArrayList;
 
 public class MapsActivity extends FragmentActivity
         implements OnMapReadyCallback,
-        GoogleMap.OnMapLongClickListener, GoogleApiClient.ConnectionCallbacks,
-        GoogleApiClient.OnConnectionFailedListener {
+        GoogleMap.OnMapLongClickListener {
 
     private GoogleMap mMap;
     private EditText editText, editText2;
@@ -53,7 +41,6 @@ public class MapsActivity extends FragmentActivity
     private EditText editText3;
     private EditText editText4;
     private String ip, port;
-    private GoogleApiClient mGoogleApiClient;
     private LatLng centerAthens = new LatLng(37.984368, 23.728198);
 
     @Override
@@ -67,13 +54,6 @@ public class MapsActivity extends FragmentActivity
         SupportMapFragment mapFragment = (SupportMapFragment) getSupportFragmentManager()
                 .findFragmentById(R.id.map_fragment);
         mapFragment.getMapAsync(this);
-        if (mGoogleApiClient == null) {
-            mGoogleApiClient = new GoogleApiClient.Builder(this)
-                    .addConnectionCallbacks(this)
-                    .addOnConnectionFailedListener(this)
-                    .addApi(LocationServices.API)
-                    .build();
-        }
         editText = (EditText) findViewById(R.id.startingPointLatitudeEditText);
         editText2 = (EditText) findViewById(R.id.startingPointLongitudeEditText);
         editText3 = (EditText) findViewById(R.id.endingPointLatitudeEditText);
@@ -85,22 +65,10 @@ public class MapsActivity extends FragmentActivity
     }
 
     @Override
-    protected void onStart() {
-        mGoogleApiClient.connect();
-        super.onStart();
-    }
-
-    @Override
     protected void onDestroy() {
         GetDirections getDirections = new GetDirections(this, "terminate");
         getDirections.execute();
         super.onDestroy();
-    }
-
-    @Override
-    protected void onStop() {
-        mGoogleApiClient.disconnect();
-        super.onStop();
     }
 
     @Override
@@ -157,32 +125,6 @@ public class MapsActivity extends FragmentActivity
         }
     }
 
-    @Override
-    public void onConnected(@Nullable Bundle bundle) {
-        try {
-            final Location mLastLocation = LocationServices.FusedLocationApi.
-                    getLastLocation(mGoogleApiClient);
-            if (mLastLocation != null) {
-                if (mMap != null) {
-                    mMap.moveCamera(CameraUpdateFactory
-                            .newLatLngZoom(new LatLng(mLastLocation.getLatitude(),
-                                    mLastLocation.getLongitude()), 15));
-                }
-            }
-        } catch(SecurityException e) {
-            e.printStackTrace();
-        }
-    }
-
-    @Override
-    public void onConnectionSuspended(int i) {
-
-    }
-
-    @Override
-    public void onConnectionFailed(@NonNull ConnectionResult connectionResult) {
-
-    }
 
     private class GetDirections extends AsyncTask {
 
@@ -263,7 +205,15 @@ public class MapsActivity extends FragmentActivity
             for (int i = 0; i < directionPoint.size(); i++) {
                 rectLine.add(directionPoint.get(i));
             }
-            main.runOnUiThread(() -> mMap.addPolyline(rectLine));
+            final PolylineOptions rectLineFinal = rectLine;
+            main.runOnUiThread(new Runnable(){
+
+                @Override
+                public void run() {
+                    mMap.addPolyline(rectLineFinal);
+                }
+
+            });
         }
 
         private ArrayList<LatLng> decodePoly(String polyline) {

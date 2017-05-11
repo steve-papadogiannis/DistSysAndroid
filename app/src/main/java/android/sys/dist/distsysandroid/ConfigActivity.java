@@ -32,7 +32,14 @@ public class ConfigActivity extends FragmentActivity {
         inputIp.addTextChangedListener(new MyTextWatcher(inputIp));
         inputPort.addTextChangedListener(new MyTextWatcher(inputPort));
 
-        btnConnect.setOnClickListener(view -> submitForm());
+        btnConnect.setOnClickListener(new View.OnClickListener(){
+
+            @Override
+            public void onClick(View v) {
+                submitForm();
+            }
+
+        });
     }
 
     /**
