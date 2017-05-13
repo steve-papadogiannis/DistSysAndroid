@@ -5,6 +5,8 @@ import android.graphics.Color;
 import android.os.AsyncTask;
 import android.support.v4.app.FragmentActivity;
 import android.os.Bundle;
+import android.text.Editable;
+import android.text.TextWatcher;
 import android.view.View;
 import android.widget.EditText;
 import android.widget.LinearLayout;
@@ -55,9 +57,77 @@ public class MapsActivity extends FragmentActivity
                 .findFragmentById(R.id.map_fragment);
         mapFragment.getMapAsync(this);
         editText = (EditText) findViewById(R.id.startingPointLatitudeEditText);
+        editText.addTextChangedListener(new TextWatcher() {
+            @Override
+            public void beforeTextChanged(CharSequence s, int start, int count, int after) {
+
+            }
+
+            @Override
+            public void onTextChanged(CharSequence s, int start, int before, int count) {
+                if (startPoint != null)
+                    startPoint.position(new LatLng(Double.parseDouble(s.toString().replace(",", ".")), startPoint.getPosition().longitude ));
+            }
+
+            @Override
+            public void afterTextChanged(Editable s) {
+
+            }
+        });
         editText2 = (EditText) findViewById(R.id.startingPointLongitudeEditText);
+        editText2.addTextChangedListener(new TextWatcher() {
+            @Override
+            public void beforeTextChanged(CharSequence s, int start, int count, int after) {
+
+            }
+
+            @Override
+            public void onTextChanged(CharSequence s, int start, int before, int count) {
+                if (startPoint != null)
+                    startPoint.position(new LatLng(startPoint.getPosition().latitude, Double.parseDouble(s.toString().replace(",", "."))));
+            }
+
+            @Override
+            public void afterTextChanged(Editable s) {
+
+            }
+        });
         editText3 = (EditText) findViewById(R.id.endingPointLatitudeEditText);
+        editText3.addTextChangedListener(new TextWatcher() {
+            @Override
+            public void beforeTextChanged(CharSequence s, int start, int count, int after) {
+
+            }
+
+            @Override
+            public void onTextChanged(CharSequence s, int start, int before, int count) {
+                if (endPoint != null)
+                    endPoint.position(new LatLng(Double.parseDouble(s.toString().replace(",", ".")), endPoint.getPosition().longitude));
+            }
+
+            @Override
+            public void afterTextChanged(Editable s) {
+
+            }
+        });
         editText4 = (EditText) findViewById(R.id.endingPointLongitudeEditText);
+        editText4.addTextChangedListener(new TextWatcher() {
+            @Override
+            public void beforeTextChanged(CharSequence s, int start, int count, int after) {
+
+            }
+
+            @Override
+            public void onTextChanged(CharSequence s, int start, int before, int count) {
+                if (endPoint != null)
+                    endPoint.position(new LatLng(endPoint.getPosition().latitude, Double.parseDouble(s.toString().replace(",", "."))));
+            }
+
+            @Override
+            public void afterTextChanged(Editable s) {
+
+            }
+        });
         linearLayout = (LinearLayout) findViewById(R.id.startingPointLinearLayout);
         linearLayout2 = (LinearLayout) findViewById(R.id.endingPointLinearLayout);
         linearLayout3 = (LinearLayout) findViewById(R.id.getNewDirectionsLinearLayout);
@@ -97,7 +167,9 @@ public class MapsActivity extends FragmentActivity
         linearLayout.setVisibility(View.VISIBLE);
         mMap.clear();
         isStartingPointConfirmed = false;
+        mMap.addMarker(startPoint);
         isEndingointConfirmed = false;
+        mMap.addMarker(endPoint);
     }
 
     public void returnToStartingPoint(View view) {
@@ -113,14 +185,14 @@ public class MapsActivity extends FragmentActivity
             mMap.clear();
             editText.setText(String.valueOf(formatter.format(latLng.latitude)));
             editText2.setText(String.valueOf(formatter.format(latLng.longitude)));
-            startPoint = new MarkerOptions().position(latLng);
+            startPoint = new MarkerOptions().position(latLng).title("Starting Location");
             mMap.addMarker(startPoint);
         } else if (!isEndingointConfirmed) {
             mMap.clear();
             mMap.addMarker(startPoint);
             editText3.setText(String.valueOf(formatter.format(latLng.latitude)));
             editText4.setText(String.valueOf(formatter.format(latLng.longitude)));
-            endPoint = new MarkerOptions().position(latLng);
+            endPoint = new MarkerOptions().position(latLng).title("Ending Location");
             mMap.addMarker(endPoint);
         }
     }
