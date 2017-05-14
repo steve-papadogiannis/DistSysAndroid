@@ -13,6 +13,7 @@ android {
         jackOptions {
             enabled true
         }
+        multiDexEnabled true
     }
     buildTypes {
         release {
@@ -40,4 +41,5 @@ dependencies {
     compile 'com.google.android.gms:play-services-maps:10.2.4'
     compile files('libs/google-maps-services-0.1.20.jar')
     compile files('libs/joda-time-2.9.7.jar')
+    compile 'com.google.android.gms:play-services:10.2.4'
 }
