@@ -11,4 +11,12 @@
     <string name="starting_point_longitude">Starting Point Longitude</string>
     <string name="defaultIp">192.168.1.2</string>
     <string name="defaultPort">9999</string>
+    <string name="startingPointLatitudeTitle">Starting Point Latitude</string>
+    <string name="startingPointLongitudeTitle">Starting Point Longitude</string>
+    <string name="confirmButtonText">Confirm Starting Point</string>
+    <string name="endingPointLatitudeTitle">Ending Point Latitude</string>
+    <string name="endingPointLongitudeTitle">Ending Point Longitude</string>
+    <string name="backButtonText">Back</string>
+    <string name="confirmEndingPointButtonText">Confirm Ending Point</string>
+    <string name="getNewDirectionsButtonText">Get New Directions</string>
 </resources>
