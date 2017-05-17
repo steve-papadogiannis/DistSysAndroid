@@ -9,4 +9,6 @@
     <string name="config_title">Specify IP and Port</string>
     <string name="starting_point_latitude">Starting Point Latitude</string>
     <string name="starting_point_longitude">Starting Point Longitude</string>
+    <string name="defaultIp">192.168.1.2</string>
+    <string name="defaultPort">9999</string>
 </resources>
