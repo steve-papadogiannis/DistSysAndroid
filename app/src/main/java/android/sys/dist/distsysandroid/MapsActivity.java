@@ -58,7 +58,6 @@ public class MapsActivity extends FragmentActivity
     private String ip, port;
     private LatLng centerAthens = new LatLng(37.984368, 23.728198);
     private GoogleApiClient mGoogleApiClient;
-    private Location mLastLocation;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -88,8 +87,13 @@ public class MapsActivity extends FragmentActivity
 
             @Override
             public void onTextChanged(CharSequence s, int start, int before, int count) {
-                if (startPoint != null)
+                if (startPoint != null) {
                     startPoint.position(new LatLng(Double.parseDouble(s.toString().replace(",", ".")), startPoint.getPosition().longitude));
+                    mMap.clear();
+                    if (endPoint != null)
+                        mMap.addMarker(endPoint).showInfoWindow();
+                    mMap.addMarker(startPoint).showInfoWindow();
+                }
             }
 
             @Override
@@ -106,8 +110,13 @@ public class MapsActivity extends FragmentActivity
 
             @Override
             public void onTextChanged(CharSequence s, int start, int before, int count) {
-                if (startPoint != null)
+                if (startPoint != null) {
                     startPoint.position(new LatLng(startPoint.getPosition().latitude, Double.parseDouble(s.toString().replace(",", "."))));
+                    mMap.clear();
+                    if (endPoint != null)
+                        mMap.addMarker(endPoint).showInfoWindow();
+                    mMap.addMarker(startPoint).showInfoWindow();
+                }
             }
 
             @Override
@@ -124,8 +133,13 @@ public class MapsActivity extends FragmentActivity
 
             @Override
             public void onTextChanged(CharSequence s, int start, int before, int count) {
-                if (endPoint != null)
+                if (endPoint != null) {
                     endPoint.position(new LatLng(Double.parseDouble(s.toString().replace(",", ".")), endPoint.getPosition().longitude));
+                    mMap.clear();
+                    if (startPoint != null)
+                        mMap.addMarker(startPoint).showInfoWindow();
+                    mMap.addMarker(endPoint).showInfoWindow();
+                }
             }
 
             @Override
@@ -142,8 +156,13 @@ public class MapsActivity extends FragmentActivity
 
             @Override
             public void onTextChanged(CharSequence s, int start, int before, int count) {
-                if (endPoint != null)
+                if (endPoint != null) {
                     endPoint.position(new LatLng(endPoint.getPosition().latitude, Double.parseDouble(s.toString().replace(",", "."))));
+                    mMap.clear();
+                    if (startPoint != null)
+                        mMap.addMarker(startPoint).showInfoWindow();
+                    mMap.addMarker(endPoint).showInfoWindow();
+                }
             }
 
             @Override
@@ -203,9 +222,9 @@ public class MapsActivity extends FragmentActivity
         linearLayout.setVisibility(View.VISIBLE);
         mMap.clear();
         isStartingPointConfirmed = false;
-        mMap.addMarker(startPoint);
+        mMap.addMarker(startPoint).showInfoWindow();
         isEndingointConfirmed = false;
-        mMap.addMarker(endPoint);
+        mMap.addMarker(endPoint).showInfoWindow();
     }
 
     public void returnToStartingPoint(View view) {
@@ -222,14 +241,14 @@ public class MapsActivity extends FragmentActivity
             editText.setText(String.valueOf(formatter.format(latLng.latitude)));
             editText2.setText(String.valueOf(formatter.format(latLng.longitude)));
             startPoint = new MarkerOptions().position(latLng).title("Starting Location");
-            mMap.addMarker(startPoint);
+            mMap.addMarker(startPoint).showInfoWindow();
         } else if (!isEndingointConfirmed) {
             mMap.clear();
-            mMap.addMarker(startPoint);
+            mMap.addMarker(startPoint).showInfoWindow();
             editText3.setText(String.valueOf(formatter.format(latLng.latitude)));
             editText4.setText(String.valueOf(formatter.format(latLng.longitude)));
             endPoint = new MarkerOptions().position(latLng).title("Ending Location");
-            mMap.addMarker(endPoint);
+            mMap.addMarker(endPoint).showInfoWindow();
         }
     }
 
@@ -252,7 +271,7 @@ public class MapsActivity extends FragmentActivity
 
     @Override
     public void onRequestPermissionsResult(int requestCode, String[] permissions, int[] grantResults) {
-        mLastLocation = LocationServices.FusedLocationApi.getLastLocation(
+        final Location mLastLocation = LocationServices.FusedLocationApi.getLastLocation(
                 mGoogleApiClient);
         if (mMap != null)
             mMap.moveCamera(CameraUpdateFactory.newLatLngZoom(
