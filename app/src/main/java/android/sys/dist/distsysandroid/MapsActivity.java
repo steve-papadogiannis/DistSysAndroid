@@ -43,6 +43,7 @@ import java.net.Socket;
 import java.text.DecimalFormat;
 import java.text.NumberFormat;
 import java.util.ArrayList;
+import java.util.List;
 
 public class MapsActivity extends FragmentActivity
         implements OnMapReadyCallback,
@@ -324,12 +325,11 @@ public class MapsActivity extends FragmentActivity
                             startPoint.getPosition().longitude + " " + endPoint.getPosition().latitude + " " +
                             endPoint.getPosition().longitude);
                     objectOutputStreamToMaster.flush();
-                    final DirectionsResult directionsResult = (DirectionsResult) objectInputStreamFromMaster.readObject();
+                    final List<Double> directionsResult = (List<Double>) objectInputStreamFromMaster.readObject();
                     objectOutputStreamToMaster.writeObject("exit");
                     objectOutputStreamToMaster.flush();
                     if (mMap != null) {
-                        ArrayList<LatLng> directionPoint = getDirection(directionsResult);
-                        drawDirections(directionPoint);
+                        drawDirections(directionsResult);
                     }
                 } catch (IOException | ClassNotFoundException e) {
                     e.printStackTrace();
@@ -354,30 +354,12 @@ public class MapsActivity extends FragmentActivity
             return null;
         }
 
-        private ArrayList<LatLng> getDirection(DirectionsResult directionsResult) {
-            ArrayList<LatLng> listGeopoints = new ArrayList<>();
-            for (DirectionsRoute route : directionsResult.routes) {
-                for (DirectionsLeg leg : route.legs) {
-                    listGeopoints.add(new LatLng(leg.startLocation.lat, leg.startLocation.lng));
-                    for (DirectionsStep step : leg.steps) {
-                        ArrayList<LatLng> arr = decodePoly(step.polyline.getEncodedPath());
-                        for (int j = 0; j < arr.size(); j++) {
-                            listGeopoints.add(new LatLng(arr.get(j).latitude, arr
-                                    .get(j).longitude));
-                        }
-                    }
-                    listGeopoints.add(new LatLng(leg.endLocation.lat, leg.endLocation.lng));
-                }
-            }
-            return listGeopoints;
-        }
-
-        private void drawDirections(ArrayList<LatLng> directionPoint) {
+        private void drawDirections(List<Double> directionPoint) {
             PolylineOptions rectLine = new PolylineOptions().width(3).color(
                     Color.RED);
 
-            for (int i = 0; i < directionPoint.size(); i++) {
-                rectLine.add(directionPoint.get(i));
+            for (int i = 0; i < directionPoint.size(); i+=2) {
+                rectLine.add(new LatLng(directionPoint.get(i), directionPoint.get(i+1)));
             }
             final PolylineOptions rectLineFinal = rectLine;
             main.runOnUiThread(new Runnable(){
@@ -388,35 +370,6 @@ public class MapsActivity extends FragmentActivity
                 }
 
             });
-        }
-
-        private ArrayList<LatLng> decodePoly(String polyline) {
-            ArrayList<LatLng> poly = new ArrayList<>();
-            int index = 0, len = polyline.length();
-            int lat = 0, lng = 0;
-            while (index < len) {
-                int b, shift = 0, result = 0;
-                do {
-                    b = polyline.charAt(index++) - 63;
-                    result |= (b & 0x1f) << shift;
-                    shift += 5;
-                } while (b >= 0x20);
-                int dlat = ((result & 1) != 0 ? ~(result >> 1) : (result >> 1));
-                lat += dlat;
-                shift = 0;
-                result = 0;
-                do {
-                    b = polyline.charAt(index++) - 63;
-                    result |= (b & 0x1f) << shift;
-                    shift += 5;
-                } while (b >= 0x20);
-                int dlng = ((result & 1) != 0 ? ~(result >> 1) : (result >> 1));
-                lng += dlng;
-
-                LatLng position = new LatLng((double) lat / 1E5, (double) lng / 1E5);
-                poly.add(position);
-            }
-            return poly;
         }
 
     }
