@@ -5,7 +5,7 @@
     android:layout_height="match_parent"
     android:orientation="vertical"
     android:weightSum="5"
-    tools:context="android.sys.dist.distsysandroid.MapsActivity">
+    tools:context="android.sys.dist.distsysandroid.com.example.distsysandroid.MapsActivity">
 
     <LinearLayout
         android:id="@+id/startingPointLinearLayout"
