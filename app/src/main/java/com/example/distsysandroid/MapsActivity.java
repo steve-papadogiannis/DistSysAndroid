@@ -201,17 +201,25 @@ public class MapsActivity extends FragmentActivity
     }
 
     public void confirmStartingPoint(View view) {
-        linearLayout.setVisibility(View.GONE);
-        linearLayout2.setVisibility(View.VISIBLE);
-        isStartingPointConfirmed = true;
+        final String startingPointLatitude = editText.getText().toString();
+        final String startingPointLongitude = editText2.getText().toString();
+        if (!startingPointLatitude.isEmpty() && !startingPointLongitude.isEmpty()) {
+            linearLayout.setVisibility(View.GONE);
+            linearLayout2.setVisibility(View.VISIBLE);
+            isStartingPointConfirmed = true;
+        }
     }
 
     public void confirmEndingPoint(View view) {
-        linearLayout2.setVisibility(View.GONE);
-        linearLayout3.setVisibility(View.VISIBLE);
-        isEndingointConfirmed = true;
-        GetDirections getDirections = new GetDirections(this, null);
-        getDirections.execute();
+        final String endingPointLatitude = editText3.getText().toString();
+        final String endingPointLongitude = editText4.getText().toString();
+        if (!endingPointLatitude.isEmpty() && !endingPointLongitude.isEmpty()) {
+            linearLayout2.setVisibility(View.GONE);
+            linearLayout3.setVisibility(View.VISIBLE);
+            isEndingointConfirmed = true;
+            GetDirections getDirections = new GetDirections(this, null);
+            getDirections.execute();
+        }
     }
 
     public void getNewDirections(View view) {
