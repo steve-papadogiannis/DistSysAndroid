@@ -1,7 +1,7 @@
 *.iml
 .gradle
 /local.properties
-Addebug-api-key.properties
+debug-api-key.properties
 release-api-key.properties
 .idea/
 .DS_Store
