@@ -1,335 +1,360 @@
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:tools="http://schemas.android.com/tools"
-    android:id="@+id/mainLinearLayout"
-    android:layout_width="match_parent"
-    android:layout_height="match_parent"
-    android:orientation="vertical"
-    android:weightSum="5"
-    tools:context="gr.papadogiannis.stefanos.client.MapsActivity">
+              xmlns:tools="http://schemas.android.com/tools"
+              android:id="@+id/mainLinearLayout"
+              android:layout_width="match_parent"
+              android:layout_height="match_parent"
+              android:orientation="vertical"
+              android:weightSum="5"
+              tools:context="gr.papadogiannis.stefanos.client.MapsActivity">
 
     <LinearLayout
-        android:id="@+id/startingPointLinearLayout"
-        android:layout_width="match_parent"
-        android:layout_height="0dp"
-        android:layout_weight="1"
-        android:orientation="vertical"
-        android:visibility="visible"
-        android:weightSum="3">
-
-        <LinearLayout
-            android:id="@+id/textViewsLinearLayout"
+            android:id="@+id/startingPointLinearLayout"
             android:layout_width="match_parent"
             android:layout_height="0dp"
             android:layout_weight="1"
-            android:gravity="center"
-            android:orientation="horizontal">
+            android:orientation="vertical"
+            android:visibility="visible"
+            android:weightSum="3">
+
+        <LinearLayout
+                android:id="@+id/textViewsLinearLayout"
+                android:layout_width="match_parent"
+                android:layout_height="0dp"
+                android:layout_weight="1"
+                android:gravity="center"
+                android:orientation="horizontal">
 
             <LinearLayout
-                android:id="@+id/startingPointLatitudeTextViewLinearLayout"
-                android:layout_width="0dp"
-                android:layout_height="wrap_content"
-                android:layout_weight="1"
-                android:orientation="vertical"
-                android:textAlignment="center">
-
-                <TextView
-                    android:id="@+id/startingPointLatitudeTextView"
-                    android:layout_width="match_parent"
-                    android:layout_height="0dp"
+                    android:id="@+id/startingPointLatitudeTextViewLinearLayout"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
                     android:layout_weight="1"
-                    android:text="@string/startingPointLatitudeTitle"
-                    android:textAlignment="center" />
-            </LinearLayout>
-
-            <LinearLayout
-                android:id="@+id/startingPointLongitudeTextViewLinearLayout"
-                android:layout_width="0dp"
-                android:layout_height="wrap_content"
-                android:layout_weight="1"
-                android:orientation="vertical">
+                    android:orientation="vertical"
+                    android:textAlignment="center">
 
                 <TextView
-                    android:id="@+id/startingPointLongitudeTextView"
-                    android:layout_width="match_parent"
+                        android:id="@+id/startingPointLatitudeTextView"
+                        android:layout_width="match_parent"
+                        android:layout_height="0dp"
+                        android:layout_weight="1"
+                        android:text="@string/startingPointLatitudeTitle"
+                        android:textAlignment="center"/>
+
+            </LinearLayout>
+
+            <LinearLayout
+                    android:id="@+id/startingPointLongitudeTextViewLinearLayout"
+                    android:layout_width="0dp"
                     android:layout_height="wrap_content"
-                    android:text="@string/startingPointLongitudeTitle"
-                    android:textAlignment="center" />
+                    android:layout_weight="1"
+                    android:orientation="vertical">
+
+                <TextView
+                        android:id="@+id/startingPointLongitudeTextView"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:text="@string/startingPointLongitudeTitle"
+                        android:textAlignment="center"/>
+
             </LinearLayout>
 
         </LinearLayout>
 
         <LinearLayout
-            android:id="@+id/editTextsLinearLayout"
-            android:layout_width="match_parent"
-            android:layout_height="0dp"
-            android:layout_weight="1"
-            android:orientation="horizontal"
-            android:weightSum="2">
+                android:id="@+id/editTextsLinearLayout"
+                android:layout_width="match_parent"
+                android:layout_height="0dp"
+                android:layout_weight="1"
+                android:orientation="horizontal"
+                android:weightSum="2">
 
             <LinearLayout
-                android:id="@+id/startingPointLatitudeEditTextLinearLayout"
-                android:layout_width="0dp"
-                android:layout_height="wrap_content"
-                android:layout_weight="1"
-                android:orientation="vertical">
+                    android:id="@+id/startingPointLatitudeEditTextLinearLayout"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:orientation="vertical">
 
                 <EditText
-                    android:id="@+id/startingPointLatitudeEditText"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:gravity="center"
-                    android:inputType="phone"
-                    android:textAlignment="center" />
+                        android:id="@+id/startingPointLatitudeEditText"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:gravity="center"
+                        android:inputType="phone"
+                        android:hint="@string/starting_point_latitude"
+                        android:textAlignment="center"
+                        android:importantForAutofill="noExcludeDescendants"/>
+
             </LinearLayout>
 
             <LinearLayout
-                android:id="@+id/startingPointLongitudeEditTextLinearLayout"
-                android:layout_width="0dp"
-                android:layout_height="wrap_content"
-                android:layout_weight="1"
-                android:orientation="vertical"
-                android:textAlignment="center">
+                    android:id="@+id/startingPointLongitudeEditTextLinearLayout"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:orientation="vertical"
+                    android:textAlignment="center">
 
                 <EditText
-                    android:id="@+id/startingPointLongitudeEditText"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:ems="10"
-                    android:gravity="center"
-                    android:inputType="phone"
-                    android:textAlignment="center" />
+                        android:id="@+id/startingPointLongitudeEditText"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:ems="10"
+                        android:gravity="center"
+                        android:inputType="phone"
+                        android:textAlignment="center"
+                        android:hint="@string/starting_point_longitude"
+                        android:importantForAutofill="noExcludeDescendants"/>
+
             </LinearLayout>
+
         </LinearLayout>
 
         <LinearLayout
-            android:id="@+id/buttonLinearLayout"
+                android:id="@+id/buttonLinearLayout"
+                android:layout_width="match_parent"
+                android:layout_height="0dp"
+                android:layout_weight="1"
+                android:orientation="horizontal"
+                android:weightSum="6">
+
+            <LinearLayout
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:orientation="vertical"/>
+
+            <LinearLayout
+                    android:id="@+id/buttonLinearLayoutInner"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="4"
+                    android:orientation="vertical">
+
+                <Button
+                        android:id="@+id/confirmStartingPointButton"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_margin="5dp"
+                        android:background="@color/colorPrimary"
+                        android:gravity="center"
+                        android:onClick="confirmStartingPoint"
+                        android:text="@string/confirmButtonText"
+                        android:textColor="@android:color/white"/>
+            </LinearLayout>
+
+            <LinearLayout
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:orientation="vertical"/>
+
+        </LinearLayout>
+
+    </LinearLayout>
+
+    <LinearLayout
+            android:id="@+id/endingPointLinearLayout"
+            android:layout_width="match_parent"
+            android:layout_height="0dp"
+            android:layout_weight="1"
+            android:orientation="vertical"
+            android:visibility="gone"
+            android:weightSum="3">
+
+        <LinearLayout
+                android:id="@+id/textViewsLinearLayout2"
+                android:layout_width="match_parent"
+                android:layout_height="0dp"
+                android:layout_weight="1"
+                android:gravity="center"
+                android:orientation="horizontal">
+
+            <LinearLayout
+                    android:id="@+id/endingPointLatitudeTextViewLinearLayout"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:orientation="vertical"
+                    android:textAlignment="center">
+
+                <TextView
+                        android:id="@+id/endingPointLatitudeTextView"
+                        android:layout_width="match_parent"
+                        android:layout_height="0dp"
+                        android:layout_weight="1"
+                        android:text="@string/endingPointLatitudeTitle"
+                        android:textAlignment="center"/>
+
+            </LinearLayout>
+
+            <LinearLayout
+                    android:id="@+id/endingPointLongitudeTextViewLinearLayout"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:orientation="vertical">
+
+                <TextView
+                        android:id="@+id/endingPointLongitudeTextView"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:text="@string/endingPointLongitudeTitle"
+                        android:textAlignment="center"/>
+
+            </LinearLayout>
+
+        </LinearLayout>
+
+        <LinearLayout
+                android:id="@+id/editTextsLinearLayout2"
+                android:layout_width="match_parent"
+                android:layout_height="0dp"
+                android:layout_weight="1"
+                android:orientation="horizontal"
+                android:weightSum="2">
+
+            <LinearLayout
+                    android:id="@+id/endingPointLatitudeEditTextLinearLayout"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:orientation="vertical">
+
+                <EditText
+                        android:id="@+id/endingPointLatitudeEditText"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:gravity="center"
+                        android:inputType="phone"
+                        android:textAlignment="center"
+                        android:hint="@string/ending_point_latitude"
+                        android:importantForAutofill="noExcludeDescendants"/>
+
+            </LinearLayout>
+
+            <LinearLayout
+                    android:id="@+id/endingPointLongitudeEditTextLinearLayout"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:orientation="vertical"
+                    android:textAlignment="center">
+
+                <EditText
+                        android:id="@+id/endingPointLongitudeEditText"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:ems="10"
+                        android:gravity="center"
+                        android:hint="@string/ending_point_longitude"
+                        android:inputType="phone"
+                        android:textAlignment="center"
+                        android:importantForAutofill="noExcludeDescendants"/>
+
+            </LinearLayout>
+
+        </LinearLayout>
+
+        <LinearLayout
+                android:id="@+id/buttonsLinearLayout"
+                android:layout_width="match_parent"
+                android:layout_height="0dp"
+                android:layout_weight="1"
+                android:orientation="horizontal"
+                android:weightSum="2">
+
+            <LinearLayout
+                    android:id="@+id/backButtonLinearLayout"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:orientation="vertical">
+
+                <Button
+                        android:id="@+id/backButton"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_margin="5dp"
+                        android:background="@color/colorPrimary"
+                        android:gravity="center"
+                        android:onClick="returnToStartingPoint"
+                        android:text="@string/backButtonText"
+                        android:textColor="@android:color/white"/>
+
+            </LinearLayout>
+
+            <LinearLayout
+                    android:id="@+id/confirmButtonLinearLayout"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:orientation="vertical">
+
+                <Button
+                        android:id="@+id/confirmEndingPointButton"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_margin="5dp"
+                        android:background="@color/colorPrimary"
+                        android:gravity="center"
+                        android:onClick="confirmEndingPoint"
+                        android:text="@string/confirmEndingPointButtonText"
+                        android:textColor="@android:color/white"/>
+
+            </LinearLayout>
+
+        </LinearLayout>
+
+    </LinearLayout>
+
+    <LinearLayout
+            android:id="@+id/getNewDirectionsLinearLayout"
             android:layout_width="match_parent"
             android:layout_height="0dp"
             android:layout_weight="1"
             android:orientation="horizontal"
+            android:visibility="gone"
             android:weightSum="6">
 
-            <LinearLayout
+        <LinearLayout
                 android:layout_width="0dp"
-                android:layout_height="wrap_content"
+                android:layout_height="match_parent"
                 android:layout_weight="1"
-                android:orientation="vertical" />
+                android:orientation="vertical"/>
 
-            <LinearLayout
-                android:id="@+id/buttonLinearLayoutInner"
+        <LinearLayout
+                android:id="@+id/getNewDirectionsLinearLayoutInner"
                 android:layout_width="0dp"
-                android:layout_height="wrap_content"
+                android:layout_height="match_parent"
                 android:layout_weight="4"
+                android:gravity="center"
                 android:orientation="vertical">
-
-                <Button
-                    android:id="@+id/confirmStartingPointButton"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:layout_margin="5dp"
-                    android:background="@color/colorPrimary"
-                    android:gravity="center"
-                    android:onClick="confirmStartingPoint"
-                    android:text="@string/confirmButtonText"
-                    android:textColor="@android:color/white" />
-            </LinearLayout>
-
-            <LinearLayout
-                android:layout_width="0dp"
-                android:layout_height="wrap_content"
-                android:layout_weight="1"
-                android:orientation="vertical" />
-
-        </LinearLayout>
-    </LinearLayout>
-
-    <LinearLayout
-        android:id="@+id/endingPointLinearLayout"
-        android:layout_width="match_parent"
-        android:layout_height="0dp"
-        android:layout_weight="1"
-        android:orientation="vertical"
-        android:visibility="gone"
-        android:weightSum="3">
-
-        <LinearLayout
-            android:id="@+id/textViewsLinearLayout2"
-            android:layout_width="match_parent"
-            android:layout_height="0dp"
-            android:layout_weight="1"
-            android:gravity="center"
-            android:orientation="horizontal">
-
-            <LinearLayout
-                android:id="@+id/endingPointLatitudeTextViewLinearLayout"
-                android:layout_width="0dp"
-                android:layout_height="wrap_content"
-                android:layout_weight="1"
-                android:orientation="vertical"
-                android:textAlignment="center">
-
-                <TextView
-                    android:id="@+id/endingPointLatitudeTextView"
-                    android:layout_width="match_parent"
-                    android:layout_height="0dp"
-                    android:layout_weight="1"
-                    android:text="@string/endingPointLatitudeTitle"
-                    android:textAlignment="center" />
-            </LinearLayout>
-
-            <LinearLayout
-                android:id="@+id/endingPointLongitudeTextViewLinearLayout"
-                android:layout_width="0dp"
-                android:layout_height="wrap_content"
-                android:layout_weight="1"
-                android:orientation="vertical">
-
-                <TextView
-                    android:id="@+id/endingPointLongitudeTextView"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:text="@string/endingPointLongitudeTitle"
-                    android:textAlignment="center" />
-            </LinearLayout>
-
-        </LinearLayout>
-
-        <LinearLayout
-            android:id="@+id/editTextsLinearLayout2"
-            android:layout_width="match_parent"
-            android:layout_height="0dp"
-            android:layout_weight="1"
-            android:orientation="horizontal"
-            android:weightSum="2">
-
-            <LinearLayout
-                android:id="@+id/endingPointLatitudeEditTextLinearLayout"
-                android:layout_width="0dp"
-                android:layout_height="wrap_content"
-                android:layout_weight="1"
-                android:orientation="vertical">
-
-                <EditText
-                    android:id="@+id/endingPointLatitudeEditText"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:gravity="center"
-                    android:inputType="phone"
-                    android:textAlignment="center" />
-            </LinearLayout>
-
-            <LinearLayout
-                android:id="@+id/endingPointLongitudeEditTextLinearLayout"
-                android:layout_width="0dp"
-                android:layout_height="wrap_content"
-                android:layout_weight="1"
-                android:orientation="vertical"
-                android:textAlignment="center">
-
-                <EditText
-                    android:id="@+id/endingPointLongitudeEditText"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:ems="10"
-                    android:gravity="center"
-                    android:inputType="phone"
-                    android:textAlignment="center" />
-            </LinearLayout>
-        </LinearLayout>
-
-        <LinearLayout
-            android:id="@+id/buttonsLinearLayout"
-            android:layout_width="match_parent"
-            android:layout_height="0dp"
-            android:layout_weight="1"
-            android:orientation="horizontal"
-            android:weightSum="2">
-
-            <LinearLayout
-                android:id="@+id/backButtonLinearLayout"
-                android:layout_width="0dp"
-                android:layout_height="wrap_content"
-                android:layout_weight="1"
-                android:orientation="vertical">
-
-                <Button
-                    android:id="@+id/backButton"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:layout_margin="5dp"
-                    android:background="@color/colorPrimary"
-                    android:gravity="center"
-                    android:onClick="returnToStartingPoint"
-                    android:text="@string/backButtonText"
-                    android:textColor="@android:color/white" />
-            </LinearLayout>
-
-            <LinearLayout
-                android:id="@+id/confirmButtonLinearLayout"
-                android:layout_width="0dp"
-                android:layout_height="wrap_content"
-                android:layout_weight="1"
-                android:orientation="vertical">
-
-                <Button
-                    android:id="@+id/confirmEndingPointButton"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:layout_margin="5dp"
-                    android:background="@color/colorPrimary"
-                    android:gravity="center"
-                    android:onClick="confirmEndingPoint"
-                    android:text="@string/confirmEndingPointButtonText"
-                    android:textColor="@android:color/white" />
-            </LinearLayout>
-
-        </LinearLayout>
-    </LinearLayout>
-
-    <LinearLayout
-        android:id="@+id/getNewDirectionsLinearLayout"
-        android:layout_width="match_parent"
-        android:layout_height="0dp"
-        android:layout_weight="1"
-        android:orientation="horizontal"
-        android:visibility="gone"
-        android:weightSum="6">
-
-        <LinearLayout
-            android:layout_width="0dp"
-            android:layout_height="match_parent"
-            android:layout_weight="1"
-            android:orientation="vertical"/>
-
-        <LinearLayout
-            android:id="@+id/getNewDirectionsLinearLayoutInner"
-            android:layout_width="0dp"
-            android:layout_height="match_parent"
-            android:layout_weight="4"
-            android:gravity="center"
-            android:orientation="vertical">
 
             <Button
-                android:id="@+id/getNewDirectionsButton"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:background="@color/colorPrimary"
-                android:onClick="getNewDirections"
-                android:text="@string/getNewDirectionsButtonText"
-                android:textColor="@android:color/white" />
+                    android:id="@+id/getNewDirectionsButton"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:background="@color/colorPrimary"
+                    android:onClick="getNewDirections"
+                    android:text="@string/getNewDirectionsButtonText"
+                    android:textColor="@android:color/white"/>
+
         </LinearLayout>
 
         <LinearLayout
-            android:layout_width="0dp"
-            android:layout_height="match_parent"
-            android:layout_weight="1"
-            android:orientation="vertical"/>
+                android:layout_width="0dp"
+                android:layout_height="match_parent"
+                android:layout_weight="1"
+                android:orientation="vertical"/>
+
     </LinearLayout>
 
     <fragment
-        android:id="@+id/map_fragment"
-        android:name="com.google.android.gms.maps.SupportMapFragment"
-        android:layout_width="match_parent"
-        android:layout_height="0dp"
-        android:layout_weight="4" />
+            android:id="@+id/map_fragment"
+            android:name="com.google.android.gms.maps.SupportMapFragment"
+            android:layout_width="match_parent"
+            android:layout_height="0dp"
+            android:layout_weight="4"/>
+
 </LinearLayout>

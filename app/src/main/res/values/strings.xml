@@ -1,3 +1,4 @@
+<?xml version="1.0" encoding="utf-8"?>
 <resources>
     <string name="app_name">DistSysClientAndroid</string>
     <string name="title_activity_maps">Map</string>
@@ -15,7 +16,9 @@
     <string name="startingPointLongitudeTitle">Starting Point Longitude</string>
     <string name="confirmButtonText">Confirm Starting Point</string>
     <string name="endingPointLatitudeTitle">Ending Point Latitude</string>
+    <string name="ending_point_latitude">Ending Point Latitude</string>
     <string name="endingPointLongitudeTitle">Ending Point Longitude</string>
+    <string name="ending_point_longitude">Ending Point Longitude</string>
     <string name="backButtonText">Back</string>
     <string name="confirmEndingPointButtonText">Confirm Ending Point</string>
     <string name="getNewDirectionsButtonText">Get New Directions</string>
