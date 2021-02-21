@@ -1,10 +1,7 @@
-package com.example.distsysandroid;
+package gr.papadogiannis.stefanos.client;
 
 import android.content.Intent;
 import android.os.Bundle;
-import android.support.design.widget.TextInputLayout;
-import android.support.v4.app.FragmentActivity;
-import android.sys.dist.distsysandroid.R;
 import android.text.Editable;
 import android.text.TextWatcher;
 import android.util.Patterns;
@@ -12,6 +9,9 @@ import android.view.View;
 import android.view.WindowManager;
 import android.widget.Button;
 import android.widget.EditText;
+import androidx.fragment.app.FragmentActivity;
+import com.google.android.material.textfield.TextInputLayout;
+import gr.papadogiannis.stefanos.DistSysClientAndroid.R;
 
 public class ConfigActivity extends FragmentActivity {
 

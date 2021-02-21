@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
-    package="android.sys.dist.distsysandroid">
+    package="gr.papadogiannis.stefanos.DistSysClientAndroid">
 
     <!--
          The ACCESS_COARSE/FINE_LOCATION permissions are not required to use
@@ -31,7 +31,7 @@
             android:value="@string/google_maps_key" />
 
         <activity
-            android:name="com.example.distsysandroid.ConfigActivity"
+            android:name="gr.papadogiannis.stefanos.client.ConfigActivity"
             android:label="@string/title_activity_maps">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
@@ -40,7 +40,7 @@
             </intent-filter>
         </activity>
         <activity
-            android:name="com.example.distsysandroid.MapsActivity"
+            android:name="gr.papadogiannis.stefanos.client.MapsActivity"
             android:label="@string/title_activity_maps">
         </activity>
     </application>
