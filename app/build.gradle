@@ -2,6 +2,12 @@ plugins {
     id 'com.android.application'
 }
 
+Properties debugApiKeyProperties = new Properties()
+debugApiKeyProperties.load(project.rootProject.file("debug-api-key.properties").newDataInputStream())
+
+Properties releaseApiKeyProperties = new Properties()
+releaseApiKeyProperties.load(project.rootProject.file("release-api-key.properties").newDataInputStream())
+
 android {
     compileSdkVersion 30
     buildToolsVersion "30.0.3"
@@ -12,6 +18,9 @@ android {
         targetSdkVersion 30
         versionCode 1
         versionName "1.0"
+
+        resValue "string", "debug_api_key", debugApiKeyProperties.getProperty("api.key", "Please define api.key in debug-api-key.properties")
+        resValue "string", "release_api_key", releaseApiKeyProperties.getProperty("api.key", "Please define api.key in release-api-key.properties")
 
         testInstrumentationRunner "androidx.test.runner.AndroidJUnitRunner"
     }
