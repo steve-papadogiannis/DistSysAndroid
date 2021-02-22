@@ -2,11 +2,16 @@ plugins {
     id 'com.android.application'
 }
 
-Properties debugApiKeyProperties = new Properties()
-debugApiKeyProperties.load(project.rootProject.file("debug-api-key.properties").newDataInputStream())
-
-Properties releaseApiKeyProperties = new Properties()
-releaseApiKeyProperties.load(project.rootProject.file("release-api-key.properties").newDataInputStream())
+def getApiKey(String fileName, String apiKeyProperty, String apiKeyEnvVar) {
+    Properties apiKeyProperties = new Properties()
+    def file = project.rootProject.file(fileName)
+    if (file.exists()) {
+        apiKeyProperties.load(file.newDataInputStream())
+        return apiKeyProperties.getProperty(apiKeyProperty) ?: "Please define api.key in debug-api-key.properties"
+    } else {
+        return System.getenv(apiKeyEnvVar) ?: "Please define DEBUG_API_KEY environment variable"
+    }
+}
 
 android {
     compileSdkVersion 30
@@ -19,12 +24,8 @@ android {
         versionCode 1
         versionName "1.0"
 
-        resValue "string", "debug_api_key", (debugApiKeyProperties.getProperty("api.key") ?:
-                System.getenv("DEBUG_API_KEY")) ?:
-                "Please define api.key in debug-api-key.properties or DEBUG_API_KEY environment variable"
-        resValue "string", "release_api_key", (releaseApiKeyProperties.getProperty("api.key") ?:
-                System.getenv("RELEASE_API_KEY")) ?:
-                "Please define api.key in release-api-key.properties or RELEASE_API_KEY environment variable"
+        resValue "string", "debug_api_key", getApiKey("debug-api-key.properties", "api.key", "DEBUG_API_KEY")
+        resValue "string", "release_api_key", getApiKey("release-api-key.properties", "api.key", "RELEASE_API_KEY")
 
         testInstrumentationRunner "androidx.test.runner.AndroidJUnitRunner"
     }
