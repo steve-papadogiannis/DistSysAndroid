@@ -1,0 +1,9 @@
+@startuml
+actor User
+box Service
+participant client
+end box
+boundary Server
+autonumber "<b>[000]"
+
+@enduml
