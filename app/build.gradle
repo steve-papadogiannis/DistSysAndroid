@@ -7,9 +7,9 @@ def getApiKey(String fileName, String apiKeyProperty, String apiKeyEnvVar) {
     def file = project.rootProject.file(fileName)
     if (file.exists()) {
         apiKeyProperties.load(file.newDataInputStream())
-        return apiKeyProperties.getProperty(apiKeyProperty) ?: "Please define api.key in debug-api-key.properties"
+        return apiKeyProperties.getProperty(apiKeyProperty) ?: "Please define $apiKeyProperty in $fileName"
     } else {
-        return System.getenv(apiKeyEnvVar) ?: "Please define DEBUG_API_KEY environment variable"
+        return System.getenv(apiKeyEnvVar) ?: "Please define $apiKeyEnvVar environment variable"
     }
 }
 
