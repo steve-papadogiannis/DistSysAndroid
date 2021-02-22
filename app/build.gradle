@@ -19,8 +19,12 @@ android {
         versionCode 1
         versionName "1.0"
 
-        resValue "string", "debug_api_key", debugApiKeyProperties.getProperty("api.key", "Please define api.key in debug-api-key.properties")
-        resValue "string", "release_api_key", releaseApiKeyProperties.getProperty("api.key", "Please define api.key in release-api-key.properties")
+        resValue "string", "debug_api_key", (debugApiKeyProperties.getProperty("api.key") ?:
+                System.getenv("DEBUG_API_KEY")) ?:
+                "Please define api.key in debug-api-key.properties or DEBUG_API_KEY environment variable"
+        resValue "string", "release_api_key", (releaseApiKeyProperties.getProperty("api.key") ?:
+                System.getenv("RELEASE_API_KEY")) ?:
+                "Please define api.key in release-api-key.properties or RELEASE_API_KEY environment variable"
 
         testInstrumentationRunner "androidx.test.runner.AndroidJUnitRunner"
     }
