@@ -13,3 +13,14 @@ and queries an **Directions Map Reduce Server** at the configured ip/port.
 * Play Services Maps SDK: 17.0.0
 * Play Services Location SDK: 18.0.0
 
+## Sequence Diagram ##
+
+![Lifecycle Sequence Diagram](./images/lifecycle.svg)
+
+## Build ##
+
+_to be described_
+
+## Run ##
+
+_to be described_
