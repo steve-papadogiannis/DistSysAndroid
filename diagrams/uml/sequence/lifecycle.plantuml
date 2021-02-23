@@ -1,9 +1,37 @@
 @startuml
 actor User
 box Service
-participant client
+participant Client
 end box
 boundary Server
 autonumber "<b>[000]"
+
+== Initialization ==
+User -> Client : Navigates to the Application
+activate Client
+
+== Configuration ==
+User -> Client : Submits the IP and Port of the Server
+
+== Runtime ==
+loop 0..n
+User -> Client : Selects a starting point in the Map Fragment
+User -> Client : Selects a ending point in the Map Fragment
+User -> Client : Presses "Get Directions" button
+Client -> Client : Creates AsyncTask
+activate Client
+Client -> Server : Queries for Directions Result
+Server --> Client : Responds the Directions Result
+Client -> Client : Draws the Directions polyline in Map Fragment
+deactivate Client
+end
+
+== Shutdown ==
+User -> Client : Exists the application
+Client -> Client : Creates AsyncTask
+activate Client
+Client -> Server : Sends "terminate" signal
+deactivate Client
+deactivate Client
 
 @enduml
