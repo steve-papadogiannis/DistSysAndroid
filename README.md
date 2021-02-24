@@ -19,7 +19,11 @@ and queries an **Directions Map Reduce Server** at the configured ip/port.
 
 ## Build ##
 
-_to be described_
+Below command should be issued inside project's directory:
+
+```
+./gradlew build connectedCheck
+```
 
 ## Run ##
 
