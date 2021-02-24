@@ -27,4 +27,18 @@ Below command should be issued inside project's directory:
 
 ## Run ##
 
-_to be described_
+Below command should be issued inside project's directory.
+`adb` should be in the user's path and an `Android`
+device of the targeted `sdk` version should be connected:
+
+For debug apk:
+
+```
+./adb install app/build/outputs/apk/debug/app-debug.apk
+```
+
+For release apk:
+
+```
+./adb install app/build/outputs/apk/release/app-release.apk
+```
